@@ -5,9 +5,11 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:/spring-context*.xml</param-value>
   </context-param>
+  <!-- 自定义的WebContextListener继承了spring的启动监听org.springframework.web.context.ContextLoaderListener -->
   <listener>
     <listener-class>com.thinkgem.javamg.modules.sys.listener.WebContextListener</listener-class>
   </listener>
+  
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
