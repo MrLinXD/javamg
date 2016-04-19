@@ -5,33 +5,41 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:/spring-context*.xml</param-value>
   </context-param>
-  <!-- 自定义的WebContextListener继承了spring的启动监听org.springframework.web.context.ContextLoaderListener -->
+  
+  <!-- 载入Spring ApplicationContext：自定义的WebContextListener继承了spring的启动监听org.springframework.web.context.ContextLoaderListener -->
   <listener>
     <listener-class>com.thinkgem.javamg.modules.sys.listener.WebContextListener</listener-class>
   </listener>
   
+  <!--  使Spring支持request与session的scope  如:<bean id="loginAction" class="com.foo.LoginAction" scope="request"/>
+  	当理需要使用手动管理action或者servlet的生命周期的时候，就需要配置RequestContextListener  
+  	其实这个然并卵配置很多时候为了从SpringMVC里：RequestContextHolder.getRequestAttributes()).getRequest()获取request对象-->
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
+  
+  <!-- Spring在web请求中定义UTF-8编码 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
-      <param-name>encoding</param-name>
+      <param-name>encoding</param-name><!-- 表示设置request的编码 -->
       <param-value>UTF-8</param-value>
     </init-param>
     <init-param>
       <param-name>forceEncoding</param-name>
-      <param-value>true</param-value>
+      <param-value>true</param-value>	<!-- 表示是否同时设置response的编码 -->
     </init-param>
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!-- Shiro与Spring集成 -->
   <filter>
     <filter-name>shiroFilter</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class><!-- DelegatingFilterProxy作用是自动到spring容器查找名字为shiroFilter（filter-name）的bean并把所有Filter的操作委托给它。然后将ShiroFilter配置到spring容器即可:spring-context-shiro.xml -->
     <init-param>
       <param-name>targetFilterLifecycle</param-name>
       <param-value>true</param-value>
@@ -41,6 +49,8 @@
     <filter-name>shiroFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  
   <filter>
     <filter-name>sitemeshFilter</filter-name>
     <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
