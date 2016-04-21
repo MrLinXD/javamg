@@ -139,7 +139,7 @@
 		</init-param>
 		<init-param>
 			<param-name>configuration</param-name>
-			<!-- 自定义继承com.ckfinder.connector.configuration.Configuration 做权限判断 -->
+			<!-- 扩展CKFinder Configuration,自定义继承com.ckfinder.connector.configuration.Configuration 做权限判断 -->
 			<param-value>com.thinkgem.javamg.common.web.CKFinderConfig</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
