@@ -582,7 +582,7 @@
 		</dependency>
 		<!-- GENERAL UTILS end -->
 		
-		<!-- CKFinder begin -->
+		<!-- 文件管理插件：CKFinder begin -->
 		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
