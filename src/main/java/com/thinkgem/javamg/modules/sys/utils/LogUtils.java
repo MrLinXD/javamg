@@ -26,7 +26,7 @@ import com.thinkgem.javamg.modules.sys.entity.Menu;
 import com.thinkgem.javamg.modules.sys.entity.User;
 
 /**
- * 字典工具类
+ * 字典? 日志工具类吧
  * 
  * @version 2014-11-7
  */

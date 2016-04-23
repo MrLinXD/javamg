@@ -11,8 +11,14 @@ package com.thinkgem.javamg.modules.sys.security;
 public class UsernamePasswordToken extends org.apache.shiro.authc.UsernamePasswordToken {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * 验证码
+	 */
 	private String captcha;
+	/**
+	 * 是否手机登录
+	 */
 	private boolean mobileLogin;
 	
 	public UsernamePasswordToken() {

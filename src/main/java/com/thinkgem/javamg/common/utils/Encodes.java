@@ -99,7 +99,7 @@ public class Encodes {
 	}
 
 	/**
-	 * Html 转码.
+	 * Html 转码.  例如将 < 转成 &lt
 	 */
 	public static String escapeHtml(String html) {
 		return StringEscapeUtils.escapeHtml4(html);
