@@ -26,7 +26,7 @@ import java.util.Properties;
  *  / thinkgem
  * @version 2013-8-28
  */
-@Intercepts({@Signature(type = Executor.class, method = "query",
+@Intercepts({@Signature(type = Executor.class, method = "query",	//从签名里可以看出，要拦截的目标类型是Executor（注意：type只能配置成接口类型），拦截的方法是名称为query,参数为MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class类型的方法
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class PaginationInterceptor extends BaseInterceptor {
 
@@ -79,7 +79,7 @@ public class PaginationInterceptor extends BaseInterceptor {
                 invocation.getArgs()[0] = newMs;
             }
 //        }
-        return invocation.proceed();
+        return invocation.proceed();// 将执行权交给下一个拦截器  
     }
 
 
