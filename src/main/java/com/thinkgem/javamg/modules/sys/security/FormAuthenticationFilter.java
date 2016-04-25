@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.thinkgem.javamg.common.utils.StringUtils;
 
-/**
+/**主要做了登录成功和失败的一些事
  * 表单验证（包含验证码）过滤类
  * 
  * @version 2014-5-19

@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited
+@Inherited//如果定义注解时使用了 @Inherited 标记,然后用定义的注解来标注另一个父类, 父类又有一个子类(subclass),则父类的所有属性将被继承到它的子类中.
 public @interface SupCol {
 
 	///////////////////////////////////// 主要 //////////////////////////////////////

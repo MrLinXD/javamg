@@ -43,7 +43,7 @@ public class LoginController extends BaseController{
 	private SessionDAO sessionDAO;
 	
 	/**
-	 * 管理登录
+	 * 管理登录		这里多半是接收shiro的loginUrl
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -68,11 +68,11 @@ public class LoginController extends BaseController{
 		if(principal != null && !principal.isMobileLogin()){
 			return "redirect:" + adminPath;
 		}
-		return "modules/sys/sysLogin";
+		return "modules/sys/sysLogin2";
 	}
 
 	/**
-	 * 登录失败，真正登录的POST请求由Filter完成
+	 * 登录失败，真正登录的POST请求由Filter完成 (FormAuthenticationFilter -- com.thinkgem.javamg.modules.sys.security.FormAuthenticationFilter)
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -82,11 +82,11 @@ public class LoginController extends BaseController{
 		if(principal != null){
 			return "redirect:" + adminPath;
 		}
-
-		String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
-		boolean rememberMe = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
+		//FormAuthenticationFilter早就拦截下来做登录验证了，这里获取验证结果处理
+		String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);//默认username常量
+		boolean rememberMe = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);//rememberMe常量
 		boolean mobile = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_MOBILE_PARAM);
-		String exception = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+		String exception = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);//默认错误attribute名常量
 		String message = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM);
 		
 		if (StringUtils.isBlank(message) || StringUtils.equals(message, "null")){

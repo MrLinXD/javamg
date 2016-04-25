@@ -28,8 +28,8 @@
  	<!-- MyBatis begin -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.thinkgem.javamg"/>
-        <property name="typeAliasesSuperType" value="com.thinkgem.javamg.common.persistence.BaseEntity"/>
+        <property name="typeAliasesPackage" value="com.thinkgem.javamg"/><!-- 给这个包起别名，默认为简单包名 -->
+        <property name="typeAliasesSuperType" value="com.thinkgem.javamg.common.persistence.BaseEntity"/><!-- 实体类父类，如果没有，则mybatis默认为Object -->
         <!-- 自动扫描mappers.xml文件 -->
         <property name="mapperLocations" value="classpath:/mappings/**/*.xml"/>
         <!-- mybatis主配置文件 -->
@@ -64,7 +64,7 @@
     <task:executor id="executor" pool-size="10"/> <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>
     
-	<!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
+	<!-- 数据源配置, 使用 druid 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
 	    <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
 	    <property name="driverClassName" value="${jdbc.driver}" />

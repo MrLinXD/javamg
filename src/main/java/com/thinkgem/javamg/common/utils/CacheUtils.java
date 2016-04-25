@@ -46,9 +46,9 @@ public class CacheUtils {
 	}
 	
 	/**
-	 * 获取缓存
-	 * @param cacheName
-	 * @param key
+	 * 获取某个缓存的key对应的value
+	 * @param cacheName		缓存名
+	 * @param key			该缓存集合里边的某个key
 	 * @return
 	 */
 	public static Object get(String cacheName, String key) {
