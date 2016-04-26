@@ -29,7 +29,7 @@
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
             </map>
         </property>
-		<property name="filterChainDefinitions">
+		<property name="filterChainDefinitions"><!-- 过滤链定义(权限过滤器定义) -->
 			<ref bean="shiroFilterChainDefinitions"/>
 		</property>
 	</bean>
@@ -49,8 +49,8 @@
 				/userfiles/** = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc
-				${adminPath}/logout = logout
-				${adminPath}/** = user
+				${adminPath}/logout = logout<!-- 使用shiro提供的logout filter来做logout操作,需要定义相应的bean:id=logout class=org.apache.shiro.web.filter.authc.LogoutFilter ; 另一种方法就是：普通的action中 实现自己的logout方法，取到Subject，然后subject.logout()  而这里的/logout=anon -->
+				${adminPath}/** = user<!-- user和authc不同：当应用开启了rememberMe时,用户下次访问时可以是一个user,但绝不会是authc,因为authc是需要重新认证的 -->
 				/act/rest/service/editor/** = perms[act:model:edit]
 				/act/rest/service/model/** = perms[act:model:edit]
 				/act/rest/service/** = user

@@ -73,7 +73,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			}
 		}
 		
-		// 校验用户名密码 (getUserByLoginName方法里边进行授权)
+		// 校验用户名密码 (getUserByLoginName方法里边有设置角色)
 		User user = getSystemService().getUserByLoginName(token.getUsername());
 		if (user != null) {
 			if (Global.NO.equals(user.getLoginFlag())){

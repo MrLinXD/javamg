@@ -68,7 +68,7 @@ public class LoginController extends BaseController{
 		if(principal != null && !principal.isMobileLogin()){
 			return "redirect:" + adminPath;
 		}
-		return "modules/sys/sysLogin2";
+		return "modules/sys/sysLogin";
 	}
 
 	/**

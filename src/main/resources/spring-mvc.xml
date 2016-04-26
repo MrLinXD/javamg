@@ -66,7 +66,7 @@
         <property name="favorPathExtension" value="true"/>
 	</bean>
 	
-	<!-- 定义视图文件解析 -->
+	<!-- 定义视图文件解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="${web.view.prefix}"/>
 		<property name="suffix" value="${web.view.suffix}"/>
@@ -103,14 +103,14 @@
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />
 	</bean>
-	
+	<!--定义异常处理页面  但是没必要,完全可以在web.xml配置-->
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
 				<prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
-				<prop key="java.lang.Throwable">error/500</prop>
+				<prop key="java.lang.Throwable">error/500</prop><!-- 普通java异常就跳转到{prefix}error/500{suffix} 路径 -->
 			</props>
-			</property>
+		</property>
 	</bean>
 	<!-- 支持Shiro对Controller的方法级AOP安全控制 end -->
 	
