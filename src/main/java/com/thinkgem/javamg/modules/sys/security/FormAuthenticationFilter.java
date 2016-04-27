@@ -72,6 +72,10 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		return super.getSuccessUrl();
 	}
 	
+	/**登录成功事件所调用的方法
+	 * @see org.apache.shiro.web.filter.authc.AuthenticationFilter#issueSuccessRedirect(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
+	 * 也可以重写onLoginSuccess方法,其实该方法就是调用了issueSuccessRedirect               (org.apache.shiro.web.filter.authc.FormAuthenticationFilter)
+	 */
 	@Override
 	protected void issueSuccessRedirect(ServletRequest request,
 			ServletResponse response) throws Exception {

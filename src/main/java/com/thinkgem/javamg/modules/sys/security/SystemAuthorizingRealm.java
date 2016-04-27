@@ -73,7 +73,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			}
 		}
 		
-		// 校验用户名密码 (getUserByLoginName方法里边有设置角色)
+		// 到数据源获取校验用到的户名密码信息 (getUserByLoginName方法里边有设置角色) 真正的  访问证书.equals(token证书) 代码在AuthenticatingRealm.assertCredentialsMatch(token,info)
 		User user = getSystemService().getUserByLoginName(token.getUsername());
 		if (user != null) {
 			if (Global.NO.equals(user.getLoginFlag())){

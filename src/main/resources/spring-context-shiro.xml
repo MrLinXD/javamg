@@ -26,10 +26,10 @@
 		<property name="filters">
             <map>
                 <entry key="cas" value-ref="casFilter"/>
-                <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="authc" value-ref="formAuthenticationFilter"/><!-- 将默认org.apache.shiro.web.filter.authc.FormAuthenticationFilter改为自定义的com.thinkgem.javamg.modules.sys.security.FormAuthenticationFilter -->
             </map>
         </property>
-		<property name="filterChainDefinitions"><!-- 过滤链定义(权限过滤器定义) -->
+		<property name="filterChainDefinitions"><!-- 过滤链定义(权限过滤器定义)   其实就是:设置url的访问权限 -->
 			<ref bean="shiroFilterChainDefinitions"/>
 		</property>
 	</bean>
@@ -41,14 +41,14 @@
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	
-	<!-- Shiro权限过滤过滤器定义 -->
+	<!-- Shiro权限过滤过滤器定义(过滤链定义)   其实就是:设置url的访问权限 -->
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
 				/static/** = anon
 				/userfiles/** = anon
-				${adminPath}/cas = cas
-				${adminPath}/login = authc
+				${adminPath}/cas = cas<!-- 单点 -->
+				${adminPath}/login = authc<!-- 这里必须要经过认证过滤器，因为/login方法里边没有执行subject.login(token),所以就用这个过滤器来做认证 -->
 				${adminPath}/logout = logout<!-- 使用shiro提供的logout filter来做logout操作,需要定义相应的bean:id=logout class=org.apache.shiro.web.filter.authc.LogoutFilter ; 另一种方法就是：普通的action中 实现自己的logout方法，取到Subject，然后subject.logout()  而这里的/logout=anon -->
 				${adminPath}/** = user<!-- user和authc不同：当应用开启了rememberMe时,用户下次访问时可以是一个user,但绝不会是authc,因为authc是需要重新认证的 -->
 				/act/rest/service/editor/** = perms[act:model:edit]
@@ -59,7 +59,7 @@
 		</constructor-arg>
 	</bean>
 	
-	<!-- CAS认证过滤器 -->  
+	<!-- 单点 CAS认证过滤器 -->  
 	<bean id="casFilter" class="org.apache.shiro.cas.CasFilter">  
 		<property name="failureUrl" value="${adminPath}/login"/>
 	</bean>
