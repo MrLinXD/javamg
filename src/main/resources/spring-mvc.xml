@@ -75,7 +75,7 @@
 	<!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
 	<mvc:default-servlet-handler />
 	
-	<!-- 静态资源映射 -->
+	<!-- 静态资源映射  例子: 引用到/static/**的资源都从/static/里面进行查找 -->
     <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
