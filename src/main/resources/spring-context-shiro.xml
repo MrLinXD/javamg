@@ -19,11 +19,11 @@
 	<!--shiro的配置，关键两点，配置SecurityManager和依赖的RealM-->
 	<!-- Shiro的Web过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" /><!-- 
-		<property name="loginUrl" value="${cas.server.url}?service=${cas.project.url}${adminPath}/cas" /> -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- <property name="loginUrl" value="${cas.server.url}?service=${cas.project.url}${adminPath}/cas" /> -->
 		<property name="loginUrl" value="${adminPath}/login" />
 		<property name="successUrl" value="${adminPath}?login" />
-		<property name="filters">
+		<property name="filters"><!-- 扩展自定义过滤器 -->
             <map>
                 <entry key="cas" value-ref="casFilter"/>
                 <entry key="authc" value-ref="formAuthenticationFilter"/><!-- 将默认org.apache.shiro.web.filter.authc.FormAuthenticationFilter改为自定义的com.thinkgem.javamg.modules.sys.security.FormAuthenticationFilter -->
@@ -34,7 +34,7 @@
 		</property>
 	</bean>
 	
-	<!-- 定义 (securityManager) Shiro安全管理配置 -->
+	<!-- 定义 (securityManager) Shiro安全管理配置     如果用ServletContainerSessionManager,则直接依赖servlet容器的回话  -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="systemAuthorizingRealm" />
 		<property name="sessionManager" ref="sessionManager" />
@@ -90,8 +90,8 @@
 <!-- 		<property name="sessionKeyPrefix" value="${redis.keyPrefix}_session_" /> -->
 <!-- 	</bean> -->
 	<bean id="sessionDAO" class="com.thinkgem.javamg.common.security.shiro.session.CacheSessionDAO">
-		<property name="sessionIdGenerator" ref="idGen" />
-		<property name="activeSessionsCacheName" value="activeSessionsCache" />
+		<property name="sessionIdGenerator" ref="idGen" /><!-- 其实默认就是uuid了的，这里用的自己写的IdGen类,然并卵 -->
+		<property name="activeSessionsCacheName" value="activeSessionsCache" /><!-- 该缓存名字 -->
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	
@@ -99,7 +99,7 @@
 	<!-- 定义授权缓存管理器 -->
 <!-- 	<bean id="shiroCacheManager" class="com.thinkgem.javamg.common.security.shiro.cache.SessionCacheManager" /> -->
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheManager" ref="cacheManager"/><!-- 这里引用了spring-context.xml文件中指定的org.springframework.cache.ehcache.EhCacheManagerFactoryBean -->
 	</bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

@@ -78,15 +78,15 @@ public class LoginController extends BaseController{
 	public String loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
 		Principal principal = UserUtils.getPrincipal();
 		
-		// 如果已经登录，则跳转到管理首页
+		// 到此为止，如果登录成功，则跳转到管理首页
 		if(principal != null){
 			return "redirect:" + adminPath;
 		}
-		//FormAuthenticationFilter早就拦截下来做登录验证了，这里获取验证结果处理
+		//FormAuthenticationFilter早就拦截下来做登录验证了，这里获取验证失败的结果来处理
 		String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);//默认username常量
 		boolean rememberMe = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);//rememberMe常量
 		boolean mobile = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_MOBILE_PARAM);
-		String exception = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);//默认错误attribute名常量
+		String exception = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);//默认登录异常存储变量名：shiroLoginFailure
 		String message = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM);
 		
 		if (StringUtils.isBlank(message) || StringUtils.equals(message, "null")){
@@ -99,7 +99,7 @@ public class LoginController extends BaseController{
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME, exception);
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM, message);
 		
-		if (logger.isDebugEnabled()){
+		if (logger.isDebugEnabled()){//为了效率所以这里做了isDebugEnabled判断，否则debug内的内容就一定被执行
 			logger.debug("login fail, active session size: {}, message: {}, exception: {}", 
 					sessionDAO.getActiveSessions(false).size(), message, exception);
 		}
@@ -215,6 +215,6 @@ public class LoginController extends BaseController{
 		if (clean){
 			loginFailMap.remove(useruame);
 		}
-		return loginFailNum >= 3;
+		return loginFailNum >= 3;//记录三次就要验证码
 	}
 }

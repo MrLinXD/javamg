@@ -29,8 +29,8 @@ import com.thinkgem.javamg.common.utils.JedisUtils;
 import com.thinkgem.javamg.common.utils.StringUtils;
 import com.thinkgem.javamg.common.web.Servlets;
 
-/**
- * 自定义授权会话管理类
+/**自定义Session存储容器
+ * 自定义授权会话管理类  --啥？
  * 
  * @version 2014-7-20
  */
