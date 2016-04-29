@@ -11,6 +11,7 @@ import java.util.List;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.apache.shiro.session.Session;
+import org.h2.util.New;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -224,6 +225,11 @@ public class SystemService extends BaseService implements InitializingBean {
 		return password.equals(Encodes.encodeHex(salt)+Encodes.encodeHex(hashPassword));
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(entryptPassword("123"));
+		System.out.println(validatePassword("123", "e383726b2d7c0fb3908e933f5da7c843d2b316bcc6d97e2fe675bc3e"));
+	}
+	
 	/**
 	 * 获得活动会话
 	 * @return
@@ -400,7 +406,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public static boolean printKeyLoadMessage(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("\r\n======================================================================\r\n");
-		sb.append("\r\n    欢迎使用 "+Global.getConfig("productName")+"  - Powered By javamg    \r\n");
+		sb.append("\r\n    欢迎使用 "+Global.getConfig("productName")+"  				     \r\n");
 		sb.append("\r\n======================================================================\r\n");
 		System.out.println(sb.toString());
 		return true;

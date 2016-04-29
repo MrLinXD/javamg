@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
+<%--<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>--%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
@@ -27,7 +27,7 @@
 					validateCode: {remote: "验证码不正确.", required: "请填写验证码."}
 				},
 				errorLabelContainer: "#messageBox",
-				errorPlacement: function(error, element) {
+				errorPlacement: function(error, element) {//指定了errorLabelContainer,那么errorPlacement事件就不会执行
 					error.appendTo($("#loginError").parent());
 				} 
 			});

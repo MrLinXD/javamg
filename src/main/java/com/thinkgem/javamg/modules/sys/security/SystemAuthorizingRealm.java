@@ -181,7 +181,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	/**
 	 * 设定密码校验的Hash算法与迭代次数
 	 */
-	@PostConstruct
+	@PostConstruct//利用spring的@PostConstruct标签达到初始化该Realm的时候，初始化其“认证器” CredentialsMatcher  这个就是真正的密码验证
 	public void initCredentialsMatcher() {
 		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(SystemService.HASH_ALGORITHM);
 		matcher.setHashIterations(SystemService.HASH_INTERATIONS);

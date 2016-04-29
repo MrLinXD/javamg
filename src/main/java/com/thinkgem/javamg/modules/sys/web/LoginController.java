@@ -43,7 +43,7 @@ public class LoginController extends BaseController{
 	private SessionDAO sessionDAO;
 	
 	/**
-	 * 管理登录		这里多半是接收shiro的loginUrl
+	 * 管理登录		shiro的loginUrl?
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -68,7 +68,7 @@ public class LoginController extends BaseController{
 		if(principal != null && !principal.isMobileLogin()){
 			return "redirect:" + adminPath;
 		}
-		return "modules/sys/sysLogin";
+		return "modules/sys/sysLogin";//登录页面
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class LoginController extends BaseController{
 	        return renderString(response, model);
 		}
 		
-		return "modules/sys/sysLogin";
+		return "modules/sys/sysLogin";//失败返回登录页面
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 如果已登录，再次访问主页，则退出原账号。
-		if (Global.TRUE.equals(Global.getConfig("notAllowRefreshIndex"))){
+		if (Global.TRUE.equals(Global.getConfig("notAllowRefreshIndex"))){//判断是否“不允许刷新主页” 这里是false
 			String logined = CookieUtils.getCookie(request, "LOGINED");
 			if (StringUtils.isBlank(logined) || "false".equals(logined)){
 				CookieUtils.setCookie(response, "LOGINED", "true");
@@ -174,20 +174,20 @@ public class LoginController extends BaseController{
 ////			request.getSession().setAttribute("aaa", "aa");
 ////		}
 //		System.out.println("==========================b");
-		return "modules/sys/sysIndex";
+		return "modules/sys/sysIndex";//直接去到主页
 	}
 	
 	/**
-	 * 获取主题方案
+	 * 获取主题方案		请求主体方案的页面要将当前url传过来
 	 */
-	@RequestMapping(value = "/theme/{theme}")
+	@RequestMapping(value = "/theme/{theme}")//将主题名字存在cookie，而在head.jsp中通过el表达式加载对应的bootstrap.css
 	public String getThemeInCookie(@PathVariable String theme, HttpServletRequest request, HttpServletResponse response){
 		if (StringUtils.isNotBlank(theme)){
 			CookieUtils.setCookie(response, "theme", theme);
 		}else{
 			theme = CookieUtils.getCookie(request, "theme");
 		}
-		return "redirect:"+request.getParameter("url");
+		return "redirect:"+request.getParameter("url");//重定向返回当前url
 	}
 	
 	/**
