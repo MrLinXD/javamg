@@ -19,10 +19,10 @@
 			// <c:if test="${tabmode eq '1'}"> 初始化页签
 			$.fn.initJerichoTab({
                 renderTo: '#right', uniqueId: 'jerichotab',
-                contentCss: { 'height': $('#right').height() - tabTitleHeight },
-                tabs: [], loadOnce: true, tabWidth: 110, titleHeight: tabTitleHeight
+                contentCss: { 'height': $('#right').height() - tabTitleHeight },//设置高度
+                tabs: [], loadOnce: true, tabWidth: 110, titleHeight: tabTitleHeight	//tabWidth 标签页标题宽度 
             });//</c:if>
-			// 绑定菜单单击事件
+			// 绑定菜单单击事件Start-----------------------------------------------
 			$("#menu a.menu").click(function(){
 				// 一级菜单焦点
 				$("#menu li.menu").removeClass("active");
@@ -101,7 +101,7 @@
 				// 大小宽度调整
 				wSizeWidth();
 				return false;
-			});
+			});// 绑定菜单单击事件End------------------------------------------------------
 			// 初始化点击第一个一级菜单
 			$("#menu a.menu:first span").click();
 			// <c:if test="${tabmode eq '1'}"> 下拉菜单以选项卡方式打开
@@ -150,7 +150,7 @@
 		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="brand"><span id="productName">${fns:getConfig('productName')}</span></div>
-				<ul id="userControl" class="nav pull-right">
+				<ul id="userControl" class="nav pull-right"><!-- 右对齐 -->
 					<li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
 					<li id="themeSwitch" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
@@ -180,7 +180,7 @@
 						$("#productName").hide();$("#user").html($("#userControl"));$("#header").prepend($("#user, #logo"));
 					</script>
 				</c:if> --%>
-				<div class="nav-collapse">
+				<!-- 一级菜单 --><div class="nav-collapse">
 					<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
 						<c:set var="firstMenu" value="true"/>
 						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
