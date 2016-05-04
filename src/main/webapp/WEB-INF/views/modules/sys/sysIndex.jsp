@@ -24,11 +24,11 @@
             });//</c:if>
 			// 绑定菜单单击事件Start-----------------------------------------------
 			$("#menu a.menu").click(function(){
-				// 一级菜单焦点
-				$("#menu li.menu").removeClass("active");
-				$(this).parent().addClass("active");
+				// 一级菜单焦点(顶头的大菜单)
+				$("#menu li.menu").removeClass("active");//先去除所有的激活状态
+				$(this).parent().addClass("active");//给当前点击的菜单加上激活状态
 				// 左侧区域隐藏
-				if ($(this).attr("target") == "mainFrame"){
+				if ($(this).attr("target") == "mainFrame"){//如果大菜单a标签的target=mainFrame 就显示mainFrame,隐藏左边菜单和叶签
 					$("#left,#openClose").hide();
 					wSizeWidth();
 					// <c:if test="${tabmode eq '1'}"> 隐藏页签
@@ -38,38 +38,38 @@
 				}
 				// 左侧区域显示
 				$("#left,#openClose").show();
-				if(!$("#openClose").hasClass("close")){
+				if(!$("#openClose").hasClass("close")){//如果#openClose没有"close"class   close状态是展开, open是缩回
 					$("#openClose").click();
 				}
-				// 显示二级菜单
-				var menuId = "#menu-" + $(this).attr("data-id");
-				if ($(menuId).length > 0){
-					$("#left .accordion").hide();
-					$(menuId).show();
+				// 显示二级菜单(左侧的大菜单)
+				var menuId = "#menu-" + $(this).attr("data-id");// 获取左侧菜单块id
+				if ($(menuId).length > 0){//如果这个菜单块有内容
+					$("#left .accordion").hide();//先隐藏所有的菜单块
+					$(menuId).show();//再显示  对应当前点击的一级菜单  的二级菜单块
 					// 初始化点击第一个二级菜单
-					if (!$(menuId + " .accordion-body:first").hasClass('in')){
+					if (!$(menuId + " .accordion-body:first").hasClass('in')){//二级菜单块的第一个菜单组body 如果有 in 就点击该.accordion-heading
 						$(menuId + " .accordion-heading:first a").click();
 					}
-					if (!$(menuId + " .accordion-body li:first ul:first").is(":visible")){
+					if (!$(menuId + " .accordion-body li:first ul:first").is(":visible")){//如果二级菜单里边还有菜单
 						$(menuId + " .accordion-body a:first i").click();
 					}
 					// 初始化点击第一个三级菜单
 					$(menuId + " .accordion-body li:first li:first a:first i").click();
-				}else{
+				}else{//如果没有这个菜单块
 					// 获取二级菜单数据
-					$.get($(this).attr("data-href"), function(data){
+					$.get($(this).attr("data-href"), function(data){//例子：http://localhost:8080/javamg/a/sys/menu/tree?parentId=27
 						if (data.indexOf("id=\"loginForm\"") != -1){
 							alert('未登录或登录超时。请重新登录，谢谢！');
 							top.location = "${ctx}";
 							return false;
 						}
-						$("#left .accordion").hide();
-						$("#left").append(data);
+						$("#left .accordion").hide();//隐藏所有的二级菜单块
+						$("#left").append(data);//追加新的二级菜单块
 						// 链接去掉虚框
 						$(menuId + " a").bind("focus",function() {
-							if(this.blur) {this.blur()};
+							//if(this.blur) {this.blur()};
 						});
-						// 二级标题
+						// 二级标题  设置标题状态
 						$(menuId + " .accordion-heading a").click(function(){
 							$(menuId + " .accordion-toggle i").removeClass('icon-chevron-down').addClass('icon-chevron-right');
 							if(!$($(this).attr('data-href')).hasClass('in')){
@@ -126,7 +126,7 @@
 				});
 			}
 			getNotifyNum(); //<c:if test="${oaNotifyRemindInterval ne '' && oaNotifyRemindInterval ne '0'}">
-			setInterval(getNotifyNum, ${oaNotifyRemindInterval}); //</c:if>
+			setInterval(getNotifyNum, ${oaNotifyRemindInterval}); //</c:if>//HTML DOM setInterval(fun,millisec) 方法
 		});
 		// <c:if test="${tabmode eq '1'}"> 添加一个页签
 		function addTab($this, refresh){
