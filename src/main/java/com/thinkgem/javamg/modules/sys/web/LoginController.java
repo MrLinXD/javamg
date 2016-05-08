@@ -51,7 +51,7 @@ public class LoginController extends BaseController{
 		
 //		// 默认页签模式
 //		String tabmode = CookieUtils.getCookie(request, "tabmode");
-//		if (tabmode == null){
+//		if (tabmode == null){ 
 //			CookieUtils.setCookie(response, "tabmode", "1");
 //		}
 		
